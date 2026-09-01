@@ -231,4 +231,32 @@ export const projects: Project[] = [
     alt: { zh: '紫蓝霓虹风格的 R-Design Studio 标识', en: 'Purple and blue neon R-Design Studio mark' },
     tags: ['BRAND', '3D', 'IDENTITY'],
   },
+  {
+    id: 'giant-spider-scene',
+    title: { zh: '巨蛛街景', en: 'Giant Spider Scene' },
+    category: { zh: '场景视觉', en: 'Scene Visual' },
+    year: '—',
+    summary: {
+      zh: '废墟建筑与巨型蜘蛛构成的电影感场景视觉。',
+      en: 'A cinematic scene with a giant spider above a weathered building.',
+    },
+    mediaType: 'image',
+    image: '/assets/work/giant-spider-scene.png',
+    alt: { zh: '废墟建筑上方的巨型蜘蛛场景', en: 'Giant spider above a weathered building' },
+    tags: ['SCENE', 'CINEMATIC', 'VISUAL'],
+  },
+  {
+    id: 'garden-resort',
+    title: { zh: '花园泳池度假屋', en: 'Garden Pool Retreat' },
+    category: { zh: '建筑可视化', en: 'Archviz' },
+    year: '2026',
+    summary: {
+      zh: '热带花园环境中的泳池度假屋建筑可视化。',
+      en: 'An architectural visualization of a pool retreat in a tropical garden.',
+    },
+    mediaType: 'image',
+    image: '/assets/work/garden-resort.png',
+    alt: { zh: '热带花园与泳池环绕的度假屋', en: 'Pool retreat surrounded by tropical gardens' },
+    tags: ['ARCHVIZ', 'GARDEN', '3D'],
+  },
 ];
