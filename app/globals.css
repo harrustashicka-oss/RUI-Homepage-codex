@@ -328,6 +328,5 @@ footer a { width: 34px; height: 34px; display: grid; place-items: center; border
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
   .scanline { display: none; }
   .video-glitch-copy, .glitch-flash, .glitch-bars { display: none; }
-  .hero-video { display: none; }
   .marquee-track { transform: none; }
 }

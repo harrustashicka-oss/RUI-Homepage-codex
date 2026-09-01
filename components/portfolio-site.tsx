@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { ArrowDownRight, ArrowUpRight, Circle, Globe2 } from 'lucide-react';
 
@@ -27,6 +27,7 @@ function Picture({ project, locale, className = '' }: { project: Project; locale
 export default function PortfolioSite() {
   const [locale, setLocale] = useState<Locale>('zh');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const heroVideoRef = useRef<HTMLVideoElement>(null);
   const reduceMotion = useReducedMotion();
   const copy = content[locale];
 
@@ -42,6 +43,19 @@ export default function PortfolioSite() {
     document.documentElement.lang = locale === 'zh' ? 'zh-CN' : 'en';
     window.localStorage.setItem('portfolio-locale', locale);
   }, [locale]);
+
+  useEffect(() => {
+    const video = heroVideoRef.current;
+    if (!video) return;
+
+    const startVideo = () => {
+      void video.play().catch(() => undefined);
+    };
+
+    startVideo();
+    video.addEventListener('canplay', startVideo);
+    return () => video.removeEventListener('canplay', startVideo);
+  }, []);
 
   const changeLocale = () => setLocale((current) => (current === 'zh' ? 'en' : 'zh'));
 
@@ -70,22 +84,18 @@ export default function PortfolioSite() {
               <source srcSet="/assets/hero-cyber.avif" type="image/avif" />
               <img src="/assets/hero-cyber.webp" alt="" fetchPriority="high" />
             </picture>
-            <video className="hero-video" autoPlay={!reduceMotion} muted loop playsInline preload="metadata" poster="/assets/hero-cyber.webp">
+            <video ref={heroVideoRef} className="hero-video" autoPlay muted loop playsInline preload="auto" poster="/assets/hero-cyber.webp">
               <source src="/assets/avatar-animation.mp4" type="video/mp4" />
             </video>
-            {!reduceMotion && (
-              <>
-                <video className="hero-video video-glitch-copy video-glitch-copy-a" autoPlay muted loop playsInline preload="metadata">
-                  <source src="/assets/avatar-animation.mp4" type="video/mp4" />
-                </video>
-                <video className="hero-video video-glitch-copy video-glitch-copy-b" autoPlay muted loop playsInline preload="metadata">
-                  <source src="/assets/avatar-animation.mp4" type="video/mp4" />
-                </video>
-                <video className="hero-video video-glitch-copy video-glitch-copy-c" autoPlay muted loop playsInline preload="metadata">
-                  <source src="/assets/avatar-animation.mp4" type="video/mp4" />
-                </video>
-              </>
-            )}
+            <video className="hero-video video-glitch-copy video-glitch-copy-a" autoPlay muted loop playsInline preload="metadata">
+              <source src="/assets/avatar-animation.mp4" type="video/mp4" />
+            </video>
+            <video className="hero-video video-glitch-copy video-glitch-copy-b" autoPlay muted loop playsInline preload="metadata">
+              <source src="/assets/avatar-animation.mp4" type="video/mp4" />
+            </video>
+            <video className="hero-video video-glitch-copy video-glitch-copy-c" autoPlay muted loop playsInline preload="metadata">
+              <source src="/assets/avatar-animation.mp4" type="video/mp4" />
+            </video>
             <div className="hero-video-shade" />
             <div className="glitch-flash" />
             <div className="glitch-bars" aria-hidden="true"><i /><i /><i /><i /></div>
