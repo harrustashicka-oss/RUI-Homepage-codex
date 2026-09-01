@@ -134,20 +134,6 @@ export const content: Record<Locale, SiteContent> = {
 
 export const projects: Project[] = [
   {
-    id: 'arnold-speaker',
-    title: { zh: '音响 · 阿诺德', en: 'Arnold Speaker' },
-    category: { zh: '产品视觉', en: 'Product Visual' },
-    year: '2023',
-    summary: {
-      zh: '粉绿配色的复古音响产品场景视觉。',
-      en: 'A retro speaker scene in pink and green.',
-    },
-    mediaType: 'image',
-    image: '/assets/work/arnold-speaker.jpg',
-    alt: { zh: '复古风格的粉绿配色音响场景', en: 'Pink and green retro speaker scene' },
-    tags: ['PRODUCT', '3D', 'VISUAL'],
-  },
-  {
     id: 'bluetooth-speaker-motion',
     title: { zh: '蓝牙音响动画', en: 'Bluetooth Speaker Motion' },
     category: { zh: '动态影像', en: 'Motion' },
