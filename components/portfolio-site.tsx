@@ -18,10 +18,22 @@ const marqueeTerms = ['VISUAL DESIGN', 'AI CREATION', 'WEB EXPERIENCE', 'EDITORI
 function Picture({ project, locale, className = '' }: { project: Project; locale: Locale; className?: string }) {
   return (
     <picture className={className}>
-      <source srcSet={project.imageAvif} type="image/avif" />
+      {project.imageAvif && <source srcSet={project.imageAvif} type="image/avif" />}
       <img src={project.image} alt={project.alt[locale]} loading="lazy" decoding="async" />
     </picture>
   );
+}
+
+function ProjectAsset({ project, locale, className = '' }: { project: Project; locale: Locale; className?: string }) {
+  if (project.mediaType === 'video') {
+    return (
+      <video className={className} muted loop autoPlay playsInline preload="metadata" aria-label={project.alt[locale]}>
+        <source src={project.image} type="video/mp4" />
+      </video>
+    );
+  }
+
+  return <Picture project={project} locale={locale} className={className} />;
 }
 
 export default function PortfolioSite() {
@@ -154,7 +166,7 @@ export default function PortfolioSite() {
               aria-label={`${copy.work.open}: ${project.title[locale]}`}
             >
               <div className="project-media">
-                <Picture project={project} locale={locale} />
+                <ProjectAsset project={project} locale={locale} />
                 <span className="project-open"><ArrowUpRight aria-hidden="true" size={18} /></span>
               </div>
               <div className="project-meta">
@@ -224,7 +236,7 @@ export default function PortfolioSite() {
               <DialogTitle>{selectedProject.title[locale]}</DialogTitle>
               <DialogDescription>{selectedProject.summary[locale]}</DialogDescription>
             </DialogHeader>
-            <Picture project={selectedProject} locale={locale} className="dialog-picture" />
+            <ProjectAsset project={selectedProject} locale={locale} className="dialog-picture" />
             <div className="tag-row dialog-tags">{selectedProject.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
           </DialogContent>
         )}
