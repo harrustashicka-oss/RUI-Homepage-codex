@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { useEffect, useState } from 'react';
+import { motion, useReducedMotion } from 'motion/react';
 import { ArrowDownRight, ArrowUpRight, Circle, Globe2 } from 'lucide-react';
 
 import {
@@ -26,9 +26,6 @@ function Picture({ project, locale, className = '' }: { project: Project; locale
 
 export default function PortfolioSite() {
   const [locale, setLocale] = useState<Locale>('zh');
-  const [scene, setScene] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const [documentHidden, setDocumentHidden] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const reduceMotion = useReducedMotion();
   const copy = content[locale];
@@ -45,24 +42,6 @@ export default function PortfolioSite() {
     document.documentElement.lang = locale === 'zh' ? 'zh-CN' : 'en';
     window.localStorage.setItem('portfolio-locale', locale);
   }, [locale]);
-
-  useEffect(() => {
-    const onVisibility = () => setDocumentHidden(document.hidden);
-    document.addEventListener('visibilitychange', onVisibility);
-    return () => document.removeEventListener('visibilitychange', onVisibility);
-  }, []);
-
-  useEffect(() => {
-    if (paused || documentHidden || reduceMotion) return;
-    const timer = window.setInterval(() => setScene((current) => (current + 1) % 3), 4800);
-    return () => window.clearInterval(timer);
-  }, [paused, documentHidden, reduceMotion]);
-
-  const sceneTitle = useMemo(() => {
-    if (scene === 0) return copy.hero.title;
-    if (scene === 1) return copy.hero.fieldTitle;
-    return copy.hero.manifesto;
-  }, [copy, scene]);
 
   const changeLocale = () => setLocale((current) => (current === 'zh' ? 'en' : 'zh'));
 
@@ -84,89 +63,50 @@ export default function PortfolioSite() {
         </nav>
       </header>
 
-      <section
-        className="hero"
-        id="top"
-        aria-labelledby="hero-title"
-        onPointerEnter={() => setPaused(true)}
-        onPointerLeave={() => setPaused(false)}
-        onFocusCapture={() => setPaused(true)}
-        onBlurCapture={(event) => {
-          if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setPaused(false);
-        }}
-      >
-        <div className={`hero-frame scene-${scene}`}>
-          <AnimatePresence mode="wait" initial={false}>
-            {scene === 0 && (
-              <motion.div
-                className="scene scene-cyber"
-                key="cyber"
-                initial={reduceMotion ? false : { opacity: 0, clipPath: 'inset(0 0 100% 0)' }}
-                animate={{ opacity: 1, clipPath: 'inset(0 0 0% 0)' }}
-                exit={reduceMotion ? { opacity: 0 } : { opacity: 0, clipPath: 'inset(100% 0 0 0)' }}
-                transition={{ duration: reduceMotion ? 0 : 0.65, ease: [0.77, 0, 0.18, 1] }}
-              >
-                <picture>
-                  <source srcSet="/assets/hero-cyber.avif" type="image/avif" />
-                  <img className="hero-image" src="/assets/hero-cyber.webp" alt={locale === 'zh' ? '粉色短发的赛博朋克虚拟头像' : 'Pink-haired cyberpunk virtual portrait'} fetchPriority="high" />
-                </picture>
-                <div className="hero-image-shade" aria-hidden="true" />
-              </motion.div>
+      <section className="hero" id="top" aria-labelledby="hero-title">
+        <div className="hero-frame">
+          <div className="hero-video-stage" aria-hidden="true">
+            <picture className="hero-video-poster">
+              <source srcSet="/assets/hero-cyber.avif" type="image/avif" />
+              <img src="/assets/hero-cyber.webp" alt="" fetchPriority="high" />
+            </picture>
+            <video className="hero-video" autoPlay={!reduceMotion} muted loop playsInline preload="metadata" poster="/assets/hero-cyber.webp">
+              <source src="/assets/avatar-animation.mp4" type="video/mp4" />
+            </video>
+            {!reduceMotion && (
+              <>
+                <video className="hero-video video-glitch-copy video-glitch-copy-a" autoPlay muted loop playsInline preload="metadata">
+                  <source src="/assets/avatar-animation.mp4" type="video/mp4" />
+                </video>
+                <video className="hero-video video-glitch-copy video-glitch-copy-b" autoPlay muted loop playsInline preload="metadata">
+                  <source src="/assets/avatar-animation.mp4" type="video/mp4" />
+                </video>
+              </>
             )}
-
-            {scene === 1 && (
-              <motion.div className="scene scene-fields" key="fields" initial={reduceMotion ? false : { opacity: 0, x: 80 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -80 }} transition={{ duration: reduceMotion ? 0 : 0.58 }}>
-                {projects.slice(0, 3).map((project, index) => (
-                  <div className="field-panel" key={project.id}>
-                    <Picture project={project} locale={locale} />
-                    <span>0{index + 1}</span>
-                    <strong>{project.category[locale]}</strong>
-                  </div>
-                ))}
-              </motion.div>
-            )}
-
-            {scene === 2 && (
-              <motion.div className="scene scene-manifesto" key="manifesto" initial={reduceMotion ? false : { opacity: 0, scale: 1.04 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: reduceMotion ? 0 : 0.65 }}>
-                <div className="manifesto-grid" aria-hidden="true" />
-                <picture className="manifesto-image">
-                  <source srcSet="/assets/about-real.avif" type="image/avif" />
-                  <img src="/assets/about-real.webp" alt={locale === 'zh' ? '创作者真实照片' : 'Creator portrait'} />
-                </picture>
-              </motion.div>
-            )}
-          </AnimatePresence>
+            <div className="hero-video-shade" />
+            <div className="glitch-flash" />
+          </div>
 
           <div className="hero-grid" aria-hidden="true" />
           <div className="scanline" aria-hidden="true" />
           <p className="hero-kicker">{copy.hero.kicker}</p>
           <div className="hero-copy">
-            <p>{scene === 0 ? copy.hero.eyebrow : scene === 1 ? copy.hero.fieldCopy : copy.hero.manifestoCopy}</p>
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.h1
-                id="hero-title"
-                className="hero-scene-title"
-                data-text={sceneTitle.replaceAll('\n', ' ')}
-                key={`${locale}-${scene}-title`}
-                initial={reduceMotion ? false : { opacity: 0, y: 28 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -22 }}
-                transition={{ duration: reduceMotion ? 0 : 0.42 }}
-              >
-                {sceneTitle.split('\n').map((line) => <span key={line}>{line}</span>)}
-              </motion.h1>
-            </AnimatePresence>
+            <p>{copy.hero.eyebrow}</p>
+            <motion.h1
+              id="hero-title"
+              className="hero-scene-title"
+              data-text={copy.hero.title.replaceAll('\n', ' ')}
+              key={`${locale}-hero-title`}
+              initial={reduceMotion ? false : { opacity: 0, y: 28 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: reduceMotion ? 0 : 0.42 }}
+            >
+              {copy.hero.title.split('\n').map((line) => <span key={line}>{line}</span>)}
+            </motion.h1>
           </div>
           <a className="hero-cta" href="#work">
             {copy.hero.cta} <ArrowDownRight aria-hidden="true" size={16} />
           </a>
-          <div className="scene-controls" aria-label={locale === 'zh' ? '首屏场景切换' : 'Hero scene controls'}>
-            {copy.hero.sceneLabels.map((label, index) => (
-              <button key={label} type="button" className={scene === index ? 'active' : ''} onClick={() => setScene(index)} aria-label={label} aria-pressed={scene === index}>
-                <span>0{index + 1}</span>
-              </button>
-            ))}
-          </div>
         </div>
       </section>
 
