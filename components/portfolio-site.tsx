@@ -81,10 +81,14 @@ export default function PortfolioSite() {
                 <video className="hero-video video-glitch-copy video-glitch-copy-b" autoPlay muted loop playsInline preload="metadata">
                   <source src="/assets/avatar-animation.mp4" type="video/mp4" />
                 </video>
+                <video className="hero-video video-glitch-copy video-glitch-copy-c" autoPlay muted loop playsInline preload="metadata">
+                  <source src="/assets/avatar-animation.mp4" type="video/mp4" />
+                </video>
               </>
             )}
             <div className="hero-video-shade" />
             <div className="glitch-flash" />
+            <div className="glitch-bars" aria-hidden="true"><i /><i /><i /><i /></div>
           </div>
 
           <div className="hero-grid" aria-hidden="true" />
