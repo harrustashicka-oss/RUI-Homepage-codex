@@ -181,18 +181,19 @@ export default function PortfolioSite() {
       </section>
 
       <section className="about-section section-pad" id="about" aria-labelledby="about-title">
-        <motion.div className="about-image-wrap" initial={{ opacity: 0, clipPath: reduceMotion ? 'none' : 'inset(0 100% 0 0)' }} whileInView={{ opacity: 1, clipPath: 'inset(0 0% 0 0)' }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: reduceMotion ? 0 : 0.75 }}>
-          <picture>
-            <source srcSet="/assets/about-real.avif" type="image/avif" />
-            <img src="/assets/about-real.webp" alt={locale === 'zh' ? '创作者真实照片' : 'Creator portrait'} loading="lazy" />
-          </picture>
-          <span>HUMAN / 01</span>
-        </motion.div>
+        <div className="about-image-wrap">
+          <img src="/assets/about-portrait.png" alt={locale === 'zh' ? '创作者肖像' : 'Creator portrait'} loading="lazy" />
+          <span>PORTRAIT / 01</span>
+        </div>
         <motion.div className="about-copy" initial={{ opacity: 0, y: reduceMotion ? 0 : 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.25 }}>
           <p className="section-index">{copy.about.index}</p>
-          <h2 id="about-title">{copy.about.title}</h2>
-          <p>{copy.about.body}</p>
-          <aside>{copy.about.note}</aside>
+          <p className="about-identity">{copy.about.identity}</p>
+          <h2 id="about-title">{copy.about.name}</h2>
+          <p className="about-role">{copy.about.title}</p>
+          <div className="about-body">
+            {copy.about.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+          </div>
+          <aside>{copy.about.quote.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</aside>
         </motion.div>
       </section>
 

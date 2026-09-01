@@ -30,7 +30,14 @@ export interface SiteContent {
     manifestoCopy: string;
   };
   work: { index: string; title: string; intro: string; open: string };
-  about: { index: string; title: string; body: string; note: string };
+  about: {
+    index: string;
+    identity: string;
+    name: string;
+    title: string;
+    body: string[];
+    quote: string[];
+  };
   capabilities: {
     index: string;
     title: string;
@@ -64,9 +71,19 @@ export const content: Record<Locale, SiteContent> = {
     },
     about: {
       index: '02 — ABOUT',
-      title: '在人的直觉与机器的可能性之间工作。',
-      body: '这是一个综合创作者的个人档案：关注视觉设计、AI 影像与网页体验如何互相影响。每个项目都从一个明确的感受或问题出发，再选择最合适的媒介完成表达。',
-      note: '当前版本使用现有创作素材构建，正式姓名与完整履历将在后续补充。',
+      identity: 'VISUAL DESIGNER · DIGITAL MEDIA ARTIST · EDUCATOR',
+      name: '蕊大大',
+      title: '视觉设计师 · 数字媒体艺术创作者 · 教育工作者',
+      body: [
+        '我是一名独立视觉设计师，同时也是一名高职院校教师。',
+        '我的创作与实践游走于视觉设计、数字媒体艺术与建筑动画之间，关注视觉语言、空间、动态影像与数字技术如何共同塑造新的观看与表达方式。',
+        '作为设计师，我喜欢在秩序与实验之间寻找平衡，将想法转化为具有清晰视觉逻辑与独特感知体验的作品。',
+        '作为教育者，我教授并持续研究数字媒体艺术与建筑动画相关领域。教学也成为我重新理解设计的一种方式——在创作、技术与知识分享之间建立新的连接。',
+      ],
+      quote: [
+        'I work across visual design, digital media art and architectural visualization, exploring the intersection of visual language, space, motion and technology.',
+        'For me, design is not only about creating images, but also about creating ways of seeing.',
+      ],
     },
     capabilities: {
       index: '03 — CAPABILITIES',
@@ -108,9 +125,19 @@ export const content: Record<Locale, SiteContent> = {
     },
     about: {
       index: '02 — ABOUT',
-      title: 'Working between human intuition and machine possibility.',
-      body: 'A multidisciplinary creator archive exploring how visual design, AI imagery and web experiences influence one another. Each project begins with a feeling or a question, then finds the medium that can express it best.',
-      note: 'This first edition is built from existing creative material. A formal name and full biography will be added later.',
+      identity: 'VISUAL DESIGNER · DIGITAL MEDIA ARTIST · EDUCATOR',
+      name: '蕊大大',
+      title: 'Visual Designer · Digital Media Artist · Educator',
+      body: [
+        'I am an independent visual designer and a vocational college educator.',
+        'My practice moves between visual design, digital media art and architectural animation, exploring how visual language, space, moving image and digital technology can shape new ways of seeing and expressing.',
+        'As a designer, I look for balance between order and experimentation—turning ideas into work with a clear visual logic and a distinct sensory experience.',
+        'As an educator, I teach and continue to research digital media art and architectural animation. Teaching is also a way for me to understand design anew: by making connections across practice, technology and shared knowledge.',
+      ],
+      quote: [
+        'I work across visual design, digital media art and architectural visualization, exploring the intersection of visual language, space, motion and technology.',
+        'For me, design is not only about creating images, but also about creating ways of seeing.',
+      ],
     },
     capabilities: {
       index: '03 — CAPABILITIES',
