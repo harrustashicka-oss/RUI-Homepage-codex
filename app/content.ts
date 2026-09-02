@@ -41,9 +41,15 @@ export interface SiteContent {
   capabilities: {
     index: string;
     title: string;
-    items: Array<{ title: string; body: string; tools: string }>;
+    intro: string;
+    items: Array<{ title: string; subtitle: string }>;
   };
-  contact: { index: string; title: string; body: string; pending: string };
+  contact: {
+    index: string;
+    title: string;
+    body: string;
+    channels: Array<{ label: string; value: string; href?: string }>;
+  };
   dialog: { close: string; projectLabel: string };
   footer: string;
 }
@@ -51,7 +57,7 @@ export interface SiteContent {
 export const content: Record<Locale, SiteContent> = {
   zh: {
     brand: '个人作品集',
-    nav: { work: '作品', about: '关于', capabilities: '能力', contact: '联系' },
+    nav: { work: '作品', about: '关于', capabilities: '实践', contact: '联系' },
     hero: {
       kicker: 'MULTIDISCIPLINARY CREATOR · 2026',
       eyebrow: '视觉设计 / AI 创作 / 网页体验',
@@ -86,26 +92,33 @@ export const content: Record<Locale, SiteContent> = {
       ],
     },
     capabilities: {
-      index: '03 — CAPABILITIES',
-      title: '三种能力，\n一套创作方法。',
+      index: '03 — PRACTICE',
+      title: '我做的内容，\n和期待的合作。',
+      intro: '视觉设计、数字媒体艺术、建筑可视化与设计教育，是我持续创作的四个方向。欢迎委托、合作或交流。',
       items: [
-        { title: 'Visual Design', body: '编辑排版、视觉系统、海报与数字图像，强调节奏、层级和可识别性。', tools: 'LAYOUT / TYPE / IMAGE' },
-        { title: 'AI Creation', body: '使用生成式工具进行角色、画面与动态实验，并把结果纳入完整叙事。', tools: 'CONCEPT / IMAGE / MOTION' },
-        { title: 'Web Experience', body: '把视觉语言转译为响应式网页、交互动效和可访问的数字体验。', tools: 'UI / MOTION / FRONTEND' },
+        { title: 'VISUAL DESIGN', subtitle: '视觉设计' },
+        { title: 'DIGITAL MEDIA ART', subtitle: '数字媒体艺术' },
+        { title: 'ARCHITECTURAL VISUALIZATION', subtitle: '建筑可视化 / 建筑动画' },
+        { title: 'EDUCATION', subtitle: '设计教育' },
       ],
     },
     contact: {
-      index: '04 — CONTACT',
-      title: '让下一件作品\n从一次对话开始。',
-      body: '联系方式与社交链接将在确认后补充。网站不会展示虚构邮箱或无效账号。',
-      pending: 'CONTACT DETAILS — COMING SOON',
+      index: 'CONTACT / 联系方式',
+      title: '合作，从这里开始。',
+      body: '如果你有项目想法、内容需求或教学合作，欢迎直接联系我。',
+      channels: [
+        { label: 'E-MAIL', value: 'ruida0206@qq.com', href: 'mailto:ruida0206@qq.com' },
+        { label: 'WECHAT', value: 'Amberjae' },
+        { label: 'GITHUB', value: 'harrustashicka-oss', href: 'https://github.com/harrustashicka-oss' },
+        { label: 'QQ', value: '573438133' },
+      ],
     },
     dialog: { close: '关闭', projectLabel: '项目预览' },
-    footer: '视觉 · AI · WEB / 持续更新中',
+    footer: '视觉设计 · 数字媒体艺术 · 建筑可视化 · 设计教育',
   },
   en: {
     brand: 'Portfolio',
-    nav: { work: 'Work', about: 'About', capabilities: 'Skills', contact: 'Contact' },
+    nav: { work: 'Work', about: 'About', capabilities: 'Practice', contact: 'Contact' },
     hero: {
       kicker: 'MULTIDISCIPLINARY CREATOR · 2026',
       eyebrow: 'VISUAL DESIGN / AI CREATION / WEB EXPERIENCE',
@@ -140,22 +153,29 @@ export const content: Record<Locale, SiteContent> = {
       ],
     },
     capabilities: {
-      index: '03 — CAPABILITIES',
-      title: 'Three capabilities.\nOne creative method.',
+      index: '03 — PRACTICE',
+      title: 'WHAT I CREATE.\nLET’S COLLABORATE.',
+      intro: 'Visual design, digital media art, architectural visualization and design education are the four directions of my ongoing practice. Open to commissions, collaborations and conversations.',
       items: [
-        { title: 'Visual Design', body: 'Editorial systems, typography, posters and digital imagery with a focus on rhythm and identity.', tools: 'LAYOUT / TYPE / IMAGE' },
-        { title: 'AI Creation', body: 'Character, image and motion experiments shaped with generative tools and intentional art direction.', tools: 'CONCEPT / IMAGE / MOTION' },
-        { title: 'Web Experience', body: 'Visual languages translated into responsive interfaces, motion and accessible digital experiences.', tools: 'UI / MOTION / FRONTEND' },
+        { title: 'VISUAL DESIGN', subtitle: '视觉设计' },
+        { title: 'DIGITAL MEDIA ART', subtitle: '数字媒体艺术' },
+        { title: 'ARCHITECTURAL VISUALIZATION', subtitle: '建筑可视化 / 建筑动画' },
+        { title: 'EDUCATION', subtitle: '设计教育' },
       ],
     },
     contact: {
-      index: '04 — CONTACT',
-      title: 'Let the next piece\nbegin with a conversation.',
-      body: 'Contact and social links will be added once confirmed. No invented email address or inactive account is shown.',
-      pending: 'CONTACT DETAILS — COMING SOON',
+      index: 'CONTACT / 联系方式',
+      title: 'START A COLLABORATION.',
+      body: 'Have a project, content brief or teaching collaboration in mind? Get in touch directly.',
+      channels: [
+        { label: 'E-MAIL', value: 'ruida0206@qq.com', href: 'mailto:ruida0206@qq.com' },
+        { label: 'WECHAT', value: 'Amberjae' },
+        { label: 'GITHUB', value: 'harrustashicka-oss', href: 'https://github.com/harrustashicka-oss' },
+        { label: 'QQ', value: '573438133' },
+      ],
     },
     dialog: { close: 'Close', projectLabel: 'Project preview' },
-    footer: 'VISUAL · AI · WEB / AN EVOLVING ARCHIVE',
+    footer: 'VISUAL DESIGN · DIGITAL MEDIA ART · ARCHVIZ · EDUCATION',
   },
 };
 

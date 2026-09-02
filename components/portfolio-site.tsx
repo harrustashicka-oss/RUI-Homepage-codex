@@ -201,26 +201,55 @@ export default function PortfolioSite() {
         <div className="section-heading compact">
           <p className="section-index">{copy.capabilities.index}</p>
           <h2 id="capabilities-title">{copy.capabilities.title.split('\n').map((line) => <span key={line}>{line}</span>)}</h2>
+          <p className="practice-summary">{copy.capabilities.intro}</p>
         </div>
         <div className="capability-list">
           {copy.capabilities.items.map((item, index) => (
             <motion.article key={item.title} initial={{ opacity: 0, x: reduceMotion ? 0 : -24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.4 }} transition={{ delay: reduceMotion ? 0 : index * 0.08 }}>
               <span className="capability-number">0{index + 1}</span>
               <h3>{item.title}</h3>
-              <p>{item.body}</p>
-              <small>{item.tools}</small>
+              <p>{item.subtitle}</p>
+              <span className="capability-arrow" aria-hidden="true">↗</span>
             </motion.article>
           ))}
         </div>
+        <div className="practice-contact" id="contact">
+          <div className="practice-contact-heading">
+            <div>
+              <p className="section-index">{copy.contact.index}</p>
+              <h3 id="contact-title">{copy.contact.title}</h3>
+            </div>
+            <p>{copy.contact.body}</p>
+          </div>
+          <div className="contact-grid" aria-labelledby="contact-title">
+            {copy.contact.channels.map((channel, index) => channel.href ? (
+              <a
+                className="contact-channel"
+                href={channel.href}
+                key={channel.label}
+                target={channel.href.startsWith('http') ? '_blank' : undefined}
+                rel={channel.href.startsWith('http') ? 'noreferrer' : undefined}
+              >
+                <span className="contact-channel-index">0{index + 1}</span>
+                <span className="contact-channel-label">{channel.label}</span>
+                <strong>{channel.value}</strong>
+                <ArrowUpRight aria-hidden="true" size={22} />
+              </a>
+            ) : (
+              <div className="contact-channel" key={channel.label}>
+                <span className="contact-channel-index">0{index + 1}</span>
+                <span className="contact-channel-label">{channel.label}</span>
+                <strong>{channel.value}</strong>
+                <span className="contact-channel-dot" aria-hidden="true" />
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
 
-      <section className="contact-section section-pad" id="contact" aria-labelledby="contact-title">
-        <p className="section-index dark-index">{copy.contact.index}</p>
-        <h2 id="contact-title">{copy.contact.title.split('\n').map((line) => <span key={line}>{line}</span>)}</h2>
-        <div className="contact-bottom">
-          <p>{copy.contact.body}</p>
-          <span>{copy.contact.pending}</span>
-        </div>
+      <section className="closing-section" aria-label="Design statement">
+        <h2>DESIGN IS A WAY OF SEEING.</h2>
+        <p>设计，是理解世界的一种方式。</p>
       </section>
 
       <footer>
