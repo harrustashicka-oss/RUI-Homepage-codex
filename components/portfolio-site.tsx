@@ -13,13 +13,15 @@ import {
 } from '@/components/ui/dialog';
 import { content, projects, type Locale, type Project } from '@/app/content';
 
+const assetPath = (path: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${path}`;
+
 const marqueeTerms = ['VISUAL DESIGN', 'AI CREATION', 'WEB EXPERIENCE', 'EDITORIAL SYSTEMS', 'MOTION STUDIES'];
 
 function Picture({ project, locale, className = '' }: { project: Project; locale: Locale; className?: string }) {
   return (
     <picture className={className}>
-      {project.imageAvif && <source srcSet={project.imageAvif} type="image/avif" />}
-      <img src={project.image} alt={project.alt[locale]} loading="lazy" decoding="async" />
+      {project.imageAvif && <source srcSet={assetPath(project.imageAvif)} type="image/avif" />}
+      <img src={assetPath(project.image)} alt={project.alt[locale]} loading="lazy" decoding="async" />
     </picture>
   );
 }
@@ -30,8 +32,8 @@ function ProjectAsset({ project, locale, className = '', showControls = false }:
     const fallbackMp4 = isWebm ? project.image.replace(/\.webm$/, '.mp4') : null;
     return (
       <video className={className} muted={!showControls} loop autoPlay playsInline preload="metadata" controls={showControls} aria-label={project.alt[locale]}>
-        <source src={project.image} type={isWebm ? 'video/webm' : 'video/mp4'} />
-        {fallbackMp4 && <source src={fallbackMp4} type="video/mp4" />}
+        <source src={assetPath(project.image)} type={isWebm ? 'video/webm' : 'video/mp4'} />
+        {fallbackMp4 && <source src={assetPath(fallbackMp4)} type="video/mp4" />}
       </video>
     );
   }
@@ -97,19 +99,19 @@ export default function PortfolioSite() {
         <div className="hero-frame">
           <div className="hero-video-stage" aria-hidden="true">
             <picture className="hero-video-poster">
-              <img src="/assets/hero-video-poster.png" alt="" fetchPriority="high" />
+              <img src={assetPath('/assets/hero-video-poster.png')} alt="" fetchPriority="high" />
             </picture>
-            <video ref={heroVideoRef} className="hero-video" autoPlay muted loop playsInline preload="auto" poster="/assets/hero-video-poster.png">
-              <source src="/assets/avatar-animation.mp4" type="video/mp4" />
+            <video ref={heroVideoRef} className="hero-video" autoPlay muted loop playsInline preload="auto" poster={assetPath('/assets/hero-video-poster.png')}>
+              <source src={assetPath('/assets/avatar-animation.mp4')} type="video/mp4" />
             </video>
             <video className="hero-video video-glitch-copy video-glitch-copy-a" autoPlay muted loop playsInline preload="metadata">
-              <source src="/assets/avatar-animation.mp4" type="video/mp4" />
+              <source src={assetPath('/assets/avatar-animation.mp4')} type="video/mp4" />
             </video>
             <video className="hero-video video-glitch-copy video-glitch-copy-b" autoPlay muted loop playsInline preload="metadata">
-              <source src="/assets/avatar-animation.mp4" type="video/mp4" />
+              <source src={assetPath('/assets/avatar-animation.mp4')} type="video/mp4" />
             </video>
             <video className="hero-video video-glitch-copy video-glitch-copy-c" autoPlay muted loop playsInline preload="metadata">
-              <source src="/assets/avatar-animation.mp4" type="video/mp4" />
+              <source src={assetPath('/assets/avatar-animation.mp4')} type="video/mp4" />
             </video>
             <div className="hero-video-shade" />
             <div className="glitch-flash" />
@@ -202,7 +204,7 @@ export default function PortfolioSite() {
 
       <section className="about-section section-pad" id="about" aria-labelledby="about-title">
         <div className="about-image-wrap">
-          <img src="/assets/about-portrait.png" alt={locale === 'zh' ? '创作者肖像' : 'Creator portrait'} loading="lazy" />
+          <img src={assetPath('/assets/about-portrait.png')} alt={locale === 'zh' ? '创作者肖像' : 'Creator portrait'} loading="lazy" />
           <span>PORTRAIT / 01</span>
         </div>
         <motion.div className="about-copy" initial={{ opacity: 0, y: reduceMotion ? 0 : 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.25 }}>
