@@ -35,6 +35,12 @@ jobs:
         env:
           NEXT_PUBLIC_BASE_PATH: /RUI-Homepage-codex
         run: pnpm build
+      - name: Normalize Pages artifact paths
+        run: |
+          if [ -d "dist/client/RUI-Homepage-codex" ]; then
+            cp -R dist/client/RUI-Homepage-codex/. dist/client/
+            rm -rf dist/client/RUI-Homepage-codex
+          fi
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
