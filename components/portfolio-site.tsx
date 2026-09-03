@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
-import { ArrowDownRight, ArrowUpRight, Circle, Globe2 } from 'lucide-react';
+import { ArrowDownRight, ArrowUpRight, Circle, Globe2, Volume2, VolumeX } from 'lucide-react';
 
 import {
   Dialog,
@@ -24,10 +24,10 @@ function Picture({ project, locale, className = '' }: { project: Project; locale
   );
 }
 
-function ProjectAsset({ project, locale, className = '' }: { project: Project; locale: Locale; className?: string }) {
+function ProjectAsset({ project, locale, className = '', showControls = false }: { project: Project; locale: Locale; className?: string; showControls?: boolean }) {
   if (project.mediaType === 'video') {
     return (
-      <video className={className} muted loop autoPlay playsInline preload="metadata" aria-label={project.alt[locale]}>
+      <video className={className} muted={!showControls} loop autoPlay playsInline preload="metadata" controls={showControls} aria-label={project.alt[locale]}>
         <source src={project.image} type="video/mp4" />
       </video>
     );
@@ -39,6 +39,7 @@ function ProjectAsset({ project, locale, className = '' }: { project: Project; l
 export default function PortfolioSite() {
   const [locale, setLocale] = useState<Locale>('zh');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [heroSoundOn, setHeroSoundOn] = useState(false);
   const heroVideoRef = useRef<HTMLVideoElement>(null);
   const reduceMotion = useReducedMotion();
   const copy = content[locale];
@@ -93,10 +94,9 @@ export default function PortfolioSite() {
         <div className="hero-frame">
           <div className="hero-video-stage" aria-hidden="true">
             <picture className="hero-video-poster">
-              <source srcSet="/assets/hero-cyber.avif" type="image/avif" />
-              <img src="/assets/hero-cyber.webp" alt="" fetchPriority="high" />
+              <img src="/assets/hero-video-poster.png" alt="" fetchPriority="high" />
             </picture>
-            <video ref={heroVideoRef} className="hero-video" autoPlay muted loop playsInline preload="auto" poster="/assets/hero-cyber.webp">
+            <video ref={heroVideoRef} className="hero-video" autoPlay muted loop playsInline preload="auto" poster="/assets/hero-video-poster.png">
               <source src="/assets/avatar-animation.mp4" type="video/mp4" />
             </video>
             <video className="hero-video video-glitch-copy video-glitch-copy-a" autoPlay muted loop playsInline preload="metadata">
@@ -112,6 +112,23 @@ export default function PortfolioSite() {
             <div className="glitch-flash" />
             <div className="glitch-bars" aria-hidden="true"><i /><i /><i /><i /></div>
           </div>
+          <button
+            className="hero-sound-toggle"
+            type="button"
+            onClick={() => {
+              const video = heroVideoRef.current;
+              if (!video) return;
+              const next = !heroSoundOn;
+              video.muted = !next;
+              setHeroSoundOn(next);
+              void video.play().catch(() => undefined);
+            }}
+            aria-pressed={heroSoundOn}
+            aria-label={heroSoundOn ? (locale === 'zh' ? '关闭首屏声音' : 'Mute hero video') : (locale === 'zh' ? '开启首屏声音' : 'Enable hero sound')}
+          >
+            {heroSoundOn ? <Volume2 aria-hidden="true" size={16} /> : <VolumeX aria-hidden="true" size={16} />}
+            <span>{heroSoundOn ? (locale === 'zh' ? '声音开启' : 'Sound on') : (locale === 'zh' ? '开启声音' : 'Sound off')}</span>
+          </button>
 
           <div className="hero-grid" aria-hidden="true" />
           <div className="scanline" aria-hidden="true" />
@@ -266,7 +283,7 @@ export default function PortfolioSite() {
               <DialogTitle>{selectedProject.title[locale]}</DialogTitle>
               <DialogDescription>{selectedProject.summary[locale]}</DialogDescription>
             </DialogHeader>
-            <ProjectAsset project={selectedProject} locale={locale} className="dialog-picture" />
+            <ProjectAsset project={selectedProject} locale={locale} className="dialog-picture" showControls />
             <div className="tag-row dialog-tags">{selectedProject.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
           </DialogContent>
         )}

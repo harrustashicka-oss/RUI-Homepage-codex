@@ -156,6 +156,8 @@ img { display: block; max-width: 100%; }
 .hero-cta { position: absolute; z-index: 9; right: 22px; bottom: 22px; display: flex; align-items: center; justify-content: space-between; gap: 34px; min-width: 190px; padding: 13px 15px; color: var(--ink); background: var(--neon); font: 650 11px/1 'IBM Plex Mono', monospace; text-transform: uppercase; }
 .hero-cta:hover svg { transform: translate(3px, 3px); }
 .hero-cta svg { transition: transform 180ms ease; }
+.hero-sound-toggle { position: absolute; z-index: 9; right: 22px; bottom: 76px; display: inline-flex; align-items: center; gap: 8px; min-height: 34px; padding: 8px 11px; border: 1px solid rgba(243,243,239,.52); color: #fff; background: rgba(5,5,5,.48); backdrop-filter: blur(10px); font: 10px/1 'IBM Plex Mono', monospace; cursor: pointer; transition: color 180ms ease, border-color 180ms ease, background 180ms ease; }
+.hero-sound-toggle:hover, .hero-sound-toggle:focus-visible, .hero-sound-toggle[aria-pressed='true'] { color: var(--ink); border-color: var(--neon); background: var(--neon); }
 
 .marquee { overflow: hidden; border-block: 1px solid var(--line); background: var(--neon); color: var(--ink); }
 .marquee-track { display: flex; width: max-content; animation: marquee 34s linear infinite; }
@@ -319,6 +321,7 @@ footer a { width: 34px; height: 34px; display: grid; place-items: center; border
   .hero-copy > p { max-width: 260px; margin-bottom: 13px; font-size: 8px; }
   .hero-scene-title { font-size: clamp(48px, 17vw, 80px); line-height: .83; }
   .hero-cta { left: 16px; right: auto; bottom: 18px; }
+  .hero-sound-toggle { right: 16px; bottom: 18px; }
   .hero-video-poster img, .hero-video { object-position: 50% 50%; }
   .marquee-track span { padding-block: 10px; font-size: 14px; }
   .section-pad { padding: 82px 18px; }
