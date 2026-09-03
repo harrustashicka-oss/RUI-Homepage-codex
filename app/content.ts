@@ -190,7 +190,7 @@ export const projects: Project[] = [
       en: 'A moving presentation for a Bluetooth speaker.',
     },
     mediaType: 'video',
-    image: '/assets/work/bluetooth-speaker-motion.mp4',
+    image: '/assets/work/bluetooth-speaker-motion.webm',
     alt: { zh: '蓝牙音响动态影像', en: 'Bluetooth speaker motion film' },
     tags: ['PRODUCT', 'MOTION', '3D'],
   },

@@ -26,9 +26,12 @@ function Picture({ project, locale, className = '' }: { project: Project; locale
 
 function ProjectAsset({ project, locale, className = '', showControls = false }: { project: Project; locale: Locale; className?: string; showControls?: boolean }) {
   if (project.mediaType === 'video') {
+    const isWebm = project.image.endsWith('.webm');
+    const fallbackMp4 = isWebm ? project.image.replace(/\.webm$/, '.mp4') : null;
     return (
       <video className={className} muted={!showControls} loop autoPlay playsInline preload="metadata" controls={showControls} aria-label={project.alt[locale]}>
-        <source src={project.image} type="video/mp4" />
+        <source src={project.image} type={isWebm ? 'video/webm' : 'video/mp4'} />
+        {fallbackMp4 && <source src={fallbackMp4} type="video/mp4" />}
       </video>
     );
   }
